@@ -1,82 +1,82 @@
-import React, { useState } from "react";
-import Lottie from "react-lottie";
-import { storage, db, auth } from "./firebase"; // Import the Firebase storage instance and auth
-import VideoRecorder from "react-video-recorder/lib/video-recorder";
-import { useNavigate } from "react-router-dom";
-import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import "./VideoRecorderPage.css"; // Importing CSS
-import { doc, updateDoc } from "firebase/firestore"; // Import required Firestore functions
-import ReactGA4 from 'react-ga4';
-import fireAnimationData from "./fire.json"; // Adjust the path as necessary
+import React, { useState } from 'react'
+import Lottie from 'react-lottie'
+import { storage, db, auth } from './firebase' // Import the Firebase storage instance and auth
+import VideoRecorder from 'react-video-recorder/lib/video-recorder'
+import { useNavigate } from 'react-router-dom'
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage'
+import './VideoRecorderPage.css' // Importing CSS
+import { doc, updateDoc } from 'firebase/firestore' // Import required Firestore functions
+import ReactGA4 from 'react-ga4'
+import fireAnimationData from './fire.json' // Adjust the path as necessary
 
 const VideoRecorderPage = () => {
-  const [recordedVideo, setRecordedVideo] = useState(null);
-  const [isUploading, setIsUploading] = useState(false);
-  const [showProTips, setShowProTips] = useState(false);
-  const [showVideo, setShowVideo] = useState(false);
-  const navigate = useNavigate();
-  ReactGA4.initialize('G-3M4KL5NDYG');
+  const [recordedVideo, setRecordedVideo] = useState(null)
+  const [isUploading, setIsUploading] = useState(false)
+  const [showProTips, setShowProTips] = useState(false)
+  const [showVideo, setShowVideo] = useState(false)
+  const navigate = useNavigate()
+  ReactGA4.initialize('G-3M4KL5NDYG')
 
-  const handleVideoRecording = (videoBlobOrFile) => {
-    setRecordedVideo(videoBlobOrFile);
-  };
+  const handleVideoRecording = videoBlobOrFile => {
+    setRecordedVideo(videoBlobOrFile)
+  }
 
-  const toggleVideo = (event) => {
+  const toggleVideo = event => {
     // Prevent the default anchor behavior of going to the link
-    event.preventDefault();
+    event.preventDefault()
 
     // Set the showVideo state to true to show the YouTubeEmbedQuestion1 component
-    setShowVideo(!showVideo);
-  };
+    setShowVideo(!showVideo)
+  }
 
   const uploadVideoToFirebase = async () => {
     if (recordedVideo && auth.currentUser) {
       try {
-        setIsUploading(true); // Start uploading
+        setIsUploading(true) // Start uploading
 
         // Add TikTok tracking
-        if(window.ttq) {
+        if (window.ttq) {
           window.ttq.track('CompleteRegistration', {
             content_id: 'user_recorded_video',
-            email: auth.currentUser.email
+            email: auth.currentUser.email,
             // Add other relevant parameters here
-          });
+          })
         }
 
-        const fileName = `user_recorded_video_${Date.now()}.mp4`;
-        const storageRef = ref(storage, fileName);
-        await uploadBytes(storageRef, recordedVideo);
-        const downloadURL = await getDownloadURL(storageRef);
+        const fileName = `user_recorded_video_${Date.now()}.mp4`
+        const storageRef = ref(storage, fileName)
+        await uploadBytes(storageRef, recordedVideo)
+        const downloadURL = await getDownloadURL(storageRef)
 
         // Update the user's document in Firestore
-        const userEmail = auth.currentUser.email; // Get the logged-in user's email
-        const userDocRef = doc(db, "drafted-accounts", userEmail);
+        const userEmail = auth.currentUser.email // Get the logged-in user's email
+        const userDocRef = doc(db, 'drafted-accounts', userEmail)
         await updateDoc(userDocRef, {
           video1: downloadURL,
-        });
+        })
 
-        console.log("Video uploaded successfully and Firestore updated");
+        console.log('Video uploaded successfully and Firestore updated')
 
         ReactGA4.event({
-          category: "Video Recording",
-          action: "Saved Video",
-          label: "Record Video 1"
-        });
+          category: 'Video Recording',
+          action: 'Saved Video',
+          label: 'Record Video 1',
+        })
 
-        navigate("/dashboard"); // Redirect to ProfileDashboard
+        navigate('/dashboard') // Redirect to ProfileDashboard
       } catch (error) {
-        console.error("Video upload failed:", error);
+        console.error('Video upload failed:', error)
       } finally {
-        setIsUploading(false);
+        setIsUploading(false)
       }
     }
-  };
+  }
 
   function YouTubeEmbedQuestion() {
     return (
       <div
         className="youtube-container"
-        style={{ overflow: "hidden", borderRadius: "8px" }}
+        style={{ overflow: 'hidden', borderRadius: '8px' }}
       >
         <iframe
           width="350"
@@ -84,33 +84,32 @@ const VideoRecorderPage = () => {
           src="https://www.youtube.com/embed/T9Dym8dDLzM?autoplay=1&controls=1&modestbranding=1&rel=0"
           title="YouTube video player"
           frameborder="0"
-          style={{ borderRadius: "14px" }} // Add border-radius here
+          style={{ borderRadius: '14px' }} // Add border-radius here
           allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
           allowfullscreen
         ></iframe>
       </div>
-    );
+    )
   }
 
   const toggleProTips = () => {
-
     ReactGA4.event({
-      category: "Video Recording",
-      action: "See Pro Tips",
-      label: "Record Video 1"
-    });
+      category: 'Video Recording',
+      action: 'See Pro Tips',
+      label: 'Record Video 1',
+    })
 
-    setShowProTips(!showProTips); // Toggle visibility of pro tips
-  };
+    setShowProTips(!showProTips) // Toggle visibility of pro tips
+  }
 
   const fireDefaultOptions = {
     loop: true,
     autoplay: true,
     animationData: fireAnimationData,
     rendererSettings: {
-      preserveAspectRatio: "xMidYMid slice",
+      preserveAspectRatio: 'xMidYMid slice',
     },
-  };
+  }
 
   return (
     <div className="video-recorder-container">
@@ -127,36 +126,36 @@ const VideoRecorderPage = () => {
       </div>
       <div className="button-group">
         <button onClick={uploadVideoToFirebase} disabled={isUploading}>
-          {isUploading ? "Saving Video" : "Save Video"}
+          {isUploading ? 'Saving Video' : 'Save Video'}
         </button>
         <button
           onClick={toggleProTips}
-          style={{ color: "white", fontWeight: "bold" }}
+          style={{ color: 'white', fontWeight: 'bold' }}
         >
           See pro tips
         </button>
         {showProTips && (
           <>
             <li>
-              <span style={{ fontWeight: "bold", color: "#53AD7A" }}>
+              <span style={{ fontWeight: 'bold', color: '#53AD7A' }}>
                 This is the typical "walk me through your resume" question.
-              </span>{" "}
+              </span>{' '}
               Talk about what you majored in and why. What internships or
               experiences you've had, and what have you learned from them? What
               skills will you bring to the hiring company?
             </li>
             <li>
-              <span style={{ fontWeight: "bold", color: "#53AD7A" }}>
+              <span style={{ fontWeight: 'bold', color: '#53AD7A' }}>
                 Show why you're the best candidate to get an opportunity,
-              </span>{" "}
+              </span>{' '}
               in terms of degree, internships, and experience as well as soft
               skills which truly set you apart. Talk about what you are
               passionate about, and what you hope to explore in your first role.
             </li>
             <li>
-              <span style={{ fontWeight: "bold", color: "#53AD7A" }}>
+              <span style={{ fontWeight: 'bold', color: '#53AD7A' }}>
                 Demonstrate that you can communicate clearly and effectively,
-              </span>{" "}
+              </span>{' '}
               present yourself professionally, and most importantly have fun and
               show your enthusiasm to go pro and put that degree to work!
             </li>
@@ -166,7 +165,7 @@ const VideoRecorderPage = () => {
                 onClick={toggleVideo}
                 target="_blank"
                 rel="noopener noreferrer"
-                style={{ color: "#53AD7A", fontWeight: "bold" }}
+                style={{ color: '#53AD7A', fontWeight: 'bold' }}
               >
                 Click to Watch Question Explained
               </a>
@@ -176,11 +175,11 @@ const VideoRecorderPage = () => {
             </div>
           </>
         )}
-        <button onClick={() => navigate("/dashboard")}>Back to Profile</button>
+        <button onClick={() => navigate('/dashboard')}>Back to Profile</button>
       </div>
       {/* Add your tips and 'Click to watch question 1 explained' link here */}
     </div>
-  );
-};
+  )
+}
 
-export default VideoRecorderPage;
+export default VideoRecorderPage
