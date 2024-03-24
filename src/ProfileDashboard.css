@@ -461,6 +461,8 @@ button:hover {
   font-weight: 100;
   font-size: 115px;
   margin-right: 16px;
+  width: 66px;
+  text-align: right;
 }
 
 .resumeInfoContentTitle {
