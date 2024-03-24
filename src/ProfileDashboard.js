@@ -201,6 +201,34 @@ const ProfileDashboard = ({
             </div>
           </section>
           {/* End Profile Section */}
+          {/* Start Progress Bar */}
+          <section className="progressBarSection">
+            <div className="progress">
+              <span
+                className="progressCompleted"
+                style={{ width: (100 * resumeIndex) / resumes.length + '%' }}
+              ></span>
+              {resumes.map(({ id }) => {
+                return (
+                  <div
+                    style={{ width: 100 / resumes.length + '%' }}
+                    className="progressStep"
+                  >
+                    <button
+                      onClick={() => setResumeIndex(id)}
+                      className={`progressStepBtn ${
+                        resumeIndex === id && 'active'
+                      }`}
+                      style={{ zIndex: resumeIndex > id ? -1 : 1 }}
+                    >
+                      {resumeIndex === id && <OkIcon />}
+                    </button>
+                  </div>
+                )
+              })}
+            </div>
+          </section>
+          {/* End Progress Bar */}
           {/* Start Recently Joined Section */}
           <section className="recently">
             <h3 className="sectionTitle">Recently joined</h3>
@@ -469,6 +497,24 @@ function CloseXIcon() {
         stroke="white"
         strokeOpacity="0.5"
         strokeWidth="2"
+      />
+    </svg>
+  )
+}
+
+function OkIcon() {
+  return (
+    <svg
+      width="14"
+      height="11"
+      viewBox="0 0 14 11"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M12.9998 0.954866L4.95505 8.9997L1.00014 5.04478"
+        stroke="#4CA65A"
+        stroke-width="2"
       />
     </svg>
   )

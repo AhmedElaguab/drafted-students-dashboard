@@ -181,7 +181,7 @@ button:hover {
 /* Start Profile Section */
 .profile {
   display: flex;
-  margin-bottom: 80px;
+  margin-bottom: 60px;
 }
 
 .profileInfo {
@@ -289,15 +289,67 @@ button:hover {
   font-weight: 600;
 }
 
-/* 
-// firstName,
-// lastName,
-// university,
-// major,
-// graduationMonth,
-// graduationYear,
-// email,
-// linkedInURL, */
+/* Start Progress Bar Section */
+.progress {
+  position: relative;
+  width: 100%;
+  height: 40px;
+  border-radius: 40px;
+  background-color: #e5e5e5;
+  margin-bottom: 60px;
+  display: flex;
+  align-items: center;
+}
+
+.progressCompleted {
+  position: absolute;
+  left: 0;
+  height: 40px;
+  border-radius: 40px;
+  width: 40px;
+  background-color: #4ca65a;
+  transition: width 0.2s ease-in-out;
+}
+
+.progressStep {
+  display: flex;
+  justify-content: end;
+}
+
+.progressStepBtn {
+  width: 24px;
+  height: 24px;
+  background-color: #b4b4b4;
+  border-radius: 24px;
+  margin-right: 8px;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1;
+  transition: none;
+}
+
+.progressStepBtn.active {
+  width: 34px;
+  height: 34px;
+  border-radius: 34px;
+  background-color: #fff;
+  margin-right: 4px;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1;
+}
+
+.progressStepBtn.active:hover {
+  background-color: #fff;
+}
+
+.progressStepBtn:hover {
+  background-color: #b4b4b4;
+}
 
 /* Start Recently Joined Section */
 .recently {
