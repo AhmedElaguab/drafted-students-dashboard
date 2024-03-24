@@ -419,10 +419,11 @@ button:hover {
 /* Start Resume Section */
 .resume {
   display: flex;
+  flex-wrap: wrap;
 }
 
 .resumeInfo {
-  width: 312px;
+  min-width: 312px;
   height: 325px;
   background: linear-gradient(317.08deg, #4ca65a 63.71%, #438c4f 128.41%);
   border-radius: 36px;
@@ -531,10 +532,12 @@ button:hover {
 .resumeUploadFormWrapper {
   flex-grow: 1;
   margin-left: 160px;
+  display: flex;
+  align-items: center;
 }
 
 .resumeUploadForm {
-  height: 100%;
+  height: 160px;
   width: 100%;
   background-color: #4ba259;
   border-radius: 18px;
@@ -601,4 +604,110 @@ button:hover {
   width: 38%;
   background-color: #fff;
   opacity: 100%;
+}
+
+@media (max-width: 1560px) {
+  .profile {
+    flex-wrap: wrap;
+  }
+
+  .profileInfo {
+    margin-bottom: 35px;
+    width: 100%;
+  }
+  .profileExper {
+    width: 100%;
+  }
+}
+
+@media (max-width: 1160px) {
+  .profileExper {
+    flex-wrap: wrap;
+  }
+
+  .profileExperEduc {
+    width: 100%;
+    margin-bottom: 22px;
+  }
+
+  .profileExperJobs {
+    width: 100%;
+  }
+}
+
+@media (max-width: 775px) {
+  .sideBar {
+    display: none;
+  }
+
+  .mainContent {
+    margin-left: 0;
+    width: 100%;
+  }
+}
+
+@media (max-width: 1220px) {
+  .recentlyList {
+    flex-wrap: wrap;
+  }
+
+  .recentlyListItem {
+    width: 47%;
+    margin-bottom: 20px;
+  }
+}
+
+@media (max-width: 570px) {
+  .recentlyListItem {
+    width: 100%;
+  }
+}
+
+@media (max-width: 1620px) {
+  .resumeUpload {
+    padding: 40px;
+  }
+
+  .resumeUploadFormWrapper {
+    margin-left: 40px;
+  }
+}
+
+@media (max-width: 1440px) {
+  .resumeInfo {
+    width: 100%;
+    margin-bottom: 20px;
+    height: 220px;
+    flex-direction: row;
+    align-items: center;
+    position: relative;
+  }
+
+  .resumeInfoHeader {
+    position: absolute;
+    right: 20px;
+    top: 20px;
+  }
+
+  .resumeUpload {
+    width: 100%;
+    margin-left: 0;
+    height: 220px;
+  }
+}
+
+@media (max-width: 1020px) {
+  .resumeUpload {
+    flex-wrap: wrap;
+    height: auto;
+  }
+
+  .resumeUploadStatus {
+    margin-bottom: 40px;
+    width: 100%;
+  }
+
+  .resumeUploadFormWrapper {
+    margin-left: 0;
+  }
 }
